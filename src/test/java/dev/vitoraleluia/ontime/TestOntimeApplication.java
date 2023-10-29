@@ -1,4 +1,4 @@
-package com.ontime.ontime;
+package dev.vitoraleluia.ontime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;

@@ -1,4 +1,4 @@
-package com.ontime.ontime;
+package dev.vitoraleluia.ontime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
