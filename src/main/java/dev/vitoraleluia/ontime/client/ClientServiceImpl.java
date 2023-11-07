@@ -11,8 +11,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
-    public void createClient(ClientDTO clientDTO) {
+    public Client createClient(ClientDTO clientDTO) {
         Client client = new Client(clientDTO);
-        repository.save(client);
+        return repository.save(client);
     }
 }
