@@ -2,18 +2,20 @@ package dev.vitoraleluia.ontime.client;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
 class ClientServiceTest {
-    @Autowired
-    private ClientService service;
-    @MockBean
+    @Mock
     private ClientRepository repository;
+    @InjectMocks
+    private ClientServiceImpl service;
 
     @Test
     void createClient() {
