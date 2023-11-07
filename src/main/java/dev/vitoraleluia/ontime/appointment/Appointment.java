@@ -13,7 +13,7 @@ public class Appointment {
     private Long id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    @ManyToMany
+    @ManyToOne
     private Client client;
 
     public Appointment() {
