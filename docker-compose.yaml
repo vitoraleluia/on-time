@@ -1,0 +1,9 @@
+services:
+  database:
+    image: postgres
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_DB=ontime
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
