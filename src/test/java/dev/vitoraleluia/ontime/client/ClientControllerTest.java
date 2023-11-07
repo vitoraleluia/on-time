@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.time.LocalDate;
 
@@ -41,26 +42,32 @@ class ClientControllerTest {
     }
 
     @Test
-    public void createUserWithInvalidData() throws Exception {
+    void createUserWithInvalidData() throws Exception {
         LocalDate dob = LocalDate.of(2001, 01, 02);
         ClientDTO clientDTO = new ClientDTO("Example name", dob, "not-valid-email", "a password");
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
 
-        this.mockMvc.perform(post("/client").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+        MockHttpServletRequestBuilder request = post("/client")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonBody);
+
+        this.mockMvc.perform(request)
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void createUserIsSuccessfully() throws Exception {
+    void createUserIsSuccessfully() throws Exception {
         LocalDate dob = LocalDate.of(2001, 01, 02);
         ClientDTO clientDTO = new ClientDTO("name", dob, "test@test.com", "a password");
 
-        doNothing().when(service)
-                .createClient(clientDTO);
+        doNothing().when(service).createClient(clientDTO);
 
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
-        this.mockMvc.perform(post("/client")
-                        .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+        MockHttpServletRequestBuilder request = post("/client")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonBody);
+
+        this.mockMvc.perform(request)
                 .andExpect(status().isOk());
     }
 }
