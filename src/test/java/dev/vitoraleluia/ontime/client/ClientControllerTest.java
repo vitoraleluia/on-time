@@ -44,7 +44,7 @@ class ClientControllerTest {
     @Test
     void createUserWithInvalidData() throws Exception {
         LocalDate dob = LocalDate.of(2001, 01, 02);
-        ClientDTO clientDTO = new ClientDTO("Example name", dob, "not-valid-email", "a password");
+        ClientDTO clientDTO = new ClientDTO("Example name", dob, "not-valid-email");
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
 
         MockHttpServletRequestBuilder request = post("/client")
@@ -58,7 +58,7 @@ class ClientControllerTest {
     @Test
     void createUserIsSuccessfully() throws Exception {
         LocalDate dob = LocalDate.of(2001, 01, 02);
-        ClientDTO clientDTO = new ClientDTO("name", dob, "test@test.com", "a password");
+        ClientDTO clientDTO = new ClientDTO("name", dob, "test@test.com");
 
         doNothing().when(service).createClient(clientDTO);
 

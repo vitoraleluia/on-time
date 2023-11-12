@@ -21,13 +21,12 @@ class ClientServiceTest {
     void createClient() {
         //given
         LocalDate dob = LocalDate.of(2001, 01, 01);
-        ClientDTO clientDTO = new ClientDTO("Name",dob, "some@email.com","password");
+        ClientDTO clientDTO = new ClientDTO("Name",dob, "some@email.com");
 
         Client client = new Client();
         client.setName(clientDTO.name());
         client.setDateOfBirth(clientDTO.dateOfBirth());
         client.setEmail(clientDTO.email());
-        client.setPassword(clientDTO.password());
 
         //when
         Mockito.when(repository.save(client)).thenReturn(client);

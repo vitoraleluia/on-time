@@ -15,19 +15,16 @@ public class Client {
     private String name;
     private LocalDate dateOfBirth;
     private String email;
-    private String password;
-
     @OneToMany
     private List<Appointment> appointments;
 
     public Client() {
     }
 
-    public Client(String name, LocalDate dateOfBirth, String email, String password, List<Appointment> appointments) {
+    public Client(String name, LocalDate dateOfBirth, String email, List<Appointment> appointments) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
-        this.password = password;
         this.appointments = appointments;
     }
 
@@ -35,7 +32,6 @@ public class Client {
         this.name = clientDTO.name();
         this.dateOfBirth = clientDTO.dateOfBirth();
         this.email = clientDTO.email();
-        this.password = clientDTO.password();
     }
 
     public Long getId() {
@@ -66,14 +62,6 @@ public class Client {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Appointment> getAppointments() {
         return appointments;
     }
@@ -87,11 +75,11 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id && Objects.equals(name, client.name) && Objects.equals(dateOfBirth, client.dateOfBirth) && Objects.equals(email, client.email) && Objects.equals(password, client.password) && Objects.equals(appointments, client.appointments);
+        return id == client.id && Objects.equals(name, client.name) && Objects.equals(dateOfBirth, client.dateOfBirth) && Objects.equals(email, client.email) && Objects.equals(appointments, client.appointments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, dateOfBirth, email, password, appointments);
+        return Objects.hash(id, name, dateOfBirth, email, appointments);
     }
 }
