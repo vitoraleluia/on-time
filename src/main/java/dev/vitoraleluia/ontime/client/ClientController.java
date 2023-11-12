@@ -1,6 +1,5 @@
 package dev.vitoraleluia.ontime.client;
 
-import dev.vitoraleluia.ontime.exceptions.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;

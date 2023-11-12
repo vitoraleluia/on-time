@@ -1,6 +1,5 @@
 package dev.vitoraleluia.ontime.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dev.vitoraleluia.ontime.exceptions.ResourceNotFoundException;
@@ -83,7 +82,7 @@ class ClientControllerTest {
 
     @Test
     void getClientWithIdOk() throws Exception {
-        LocalDate dob = LocalDate.of(1999,06,26);
+        LocalDate dob = LocalDate.of(1999, 06, 26);
         ClientDTO expectedClient = new ClientDTO("Name", dob, "example@email.com", Collections.emptyList());
 
         when(service.getClientWithId(1L)).thenReturn(expectedClient);
@@ -97,7 +96,7 @@ class ClientControllerTest {
 
     @Test
     void getClientWithIdNotFound() throws Exception {
-        LocalDate dob = LocalDate.of(1999,06,26);
+        LocalDate dob = LocalDate.of(1999, 06, 26);
         ClientDTO expectedClient = new ClientDTO("Name", dob, "example@email.com", Collections.emptyList());
 
         when(service.getClientWithId(1L)).thenThrow(new ResourceNotFoundException("Client not found with id"));
