@@ -28,7 +28,7 @@ public class Client {
         this.appointments = appointments;
     }
 
-    public Client(ClientDTO clientDTO) {
+    public Client(ClientRegistrationDTO clientDTO) {
         this.name = clientDTO.name();
         this.dateOfBirth = clientDTO.dateOfBirth();
         this.email = clientDTO.email();

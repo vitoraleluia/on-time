@@ -1,6 +1,10 @@
 package dev.vitoraleluia.ontime.client;
 
+import dev.vitoraleluia.ontime.exceptions.ResourceNotFoundException;
+
 public interface ClientService {
 
-    Client createClient(ClientDTO clientDTO);
+    Client createClient(ClientRegistrationDTO clientDTO);
+
+    ClientDTO getClientWithId(Long id);
 }

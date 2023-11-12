@@ -1,11 +1,11 @@
 package dev.vitoraleluia.ontime.client;
 
+import dev.vitoraleluia.ontime.exceptions.ResourceNotFoundException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/client")
@@ -18,8 +18,15 @@ public class ClientController {
     }
 
     @PostMapping
-    public void createClient(@RequestBody @NonNull @Valid ClientDTO clientDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createClient(@RequestBody @NonNull @Valid ClientRegistrationDTO clientDTO) {
         service.createClient(clientDTO);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDTO getClientWithId(@PathVariable("id") @NonNull @Positive Long id) {
+        return service.getClientWithId(id);
     }
 
 }

@@ -1,9 +1,18 @@
 package dev.vitoraleluia.ontime.client;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import dev.vitoraleluia.ontime.exceptions.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
-public class ClientControllerExceptionHandler {
+@RestControllerAdvice
+public class ClientControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    // TODO: 10/29/23 implement this to send a pretty response when an exception is trown 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void notFound(ResourceNotFoundException exception) {
+    }
 }
