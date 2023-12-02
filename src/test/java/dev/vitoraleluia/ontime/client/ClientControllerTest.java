@@ -52,7 +52,7 @@ class ClientControllerTest {
 
     @Test
     void createUserWithInvalidData() throws Exception {
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Example name", ClientTestConsts.PHONE_NUMBER, "not-valid-email");
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Example name", "not-valid-email",ClientTestConsts.PHONE_NUMBER);
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
 
         MockHttpServletRequestBuilder request = post("/client")

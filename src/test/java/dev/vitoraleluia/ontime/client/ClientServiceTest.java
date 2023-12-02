@@ -17,6 +17,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceTest {
+    public static final String EMAIL = "some@email.com";
     @Mock
     private ClientRepository repository;
     @Mock
@@ -43,7 +44,7 @@ class ClientServiceTest {
 
     @Test
     void getClientFromId() {
-        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, "some@email.com", Collections.emptyList());
+        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, EMAIL, Collections.emptyList());
         Client clientFromRepo = new Client(expectedDto.name(), expectedDto.phoneNumber(), expectedDto.email(), Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.of(clientFromRepo));
