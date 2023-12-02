@@ -13,25 +13,25 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private LocalDate dateOfBirth;
     private String email;
+    private String phoneNumber;
     @OneToMany
     private List<Appointment> appointments;
 
     public Client() {
     }
 
-    public Client(String name, LocalDate dateOfBirth, String email, List<Appointment> appointments) {
+    public Client(String name, String email, String phoneNumber, List<Appointment> appointments) {
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.appointments = appointments;
     }
 
     public Client(ClientRegistrationDTO clientDTO) {
         this.name = clientDTO.name();
-        this.dateOfBirth = clientDTO.dateOfBirth();
         this.email = clientDTO.email();
+        this.phoneNumber = clientDTO.phoneNumber();
     }
 
     public Long getId() {
@@ -46,12 +46,12 @@ public class Client {
         this.name = name;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -75,11 +75,11 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id && Objects.equals(name, client.name) && Objects.equals(dateOfBirth, client.dateOfBirth) && Objects.equals(email, client.email) && Objects.equals(appointments, client.appointments);
+        return id == client.id && Objects.equals(name, client.name) && Objects.equals(phoneNumber, client.phoneNumber) && Objects.equals(email, client.email) && Objects.equals(appointments, client.appointments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, dateOfBirth, email, appointments);
+        return Objects.hash(id, name, phoneNumber, email, appointments);
     }
 }

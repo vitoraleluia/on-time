@@ -17,7 +17,7 @@ public class ClientDTOMapper implements Function<Client, ClientDTO> {
     public ClientDTO apply(Client client) {
         return new ClientDTO(
                 client.getName(),
-                client.getDateOfBirth(),
+                client.getPhoneNumber(),
                 client.getEmail(),
                 client.getAppointments().stream().map(appointmentMapper).toList()
         );

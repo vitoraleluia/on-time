@@ -27,11 +27,11 @@ class ClientServiceTest {
     @Test
     void createClient() {
         //given
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", getValidDob(), "some@email.com");
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", "some@email.com",ClientTestConsts.PHONE_NUMBER);
 
         Client client = new Client();
         client.setName(clientDTO.name());
-        client.setDateOfBirth(clientDTO.dateOfBirth());
+        client.setPhoneNumber(ClientTestConsts.PHONE_NUMBER);
         client.setEmail(clientDTO.email());
 
         //when
@@ -43,8 +43,8 @@ class ClientServiceTest {
 
     @Test
     void getClientFromId() {
-        ClientDTO expectedDto = new ClientDTO("name", getValidDob(), "some@email.com", Collections.emptyList());
-        Client clientFromRepo = new Client(expectedDto.name(), expectedDto.dateOfBirth(), expectedDto.email(), Collections.emptyList());
+        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, "some@email.com", Collections.emptyList());
+        Client clientFromRepo = new Client(expectedDto.name(), expectedDto.phoneNumber(), expectedDto.email(), Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.of(clientFromRepo));
         when(mapper.apply(clientFromRepo)).thenReturn(expectedDto);
@@ -56,8 +56,8 @@ class ClientServiceTest {
 
     @Test
     void getClientFromIdNotFound() {
-        ClientDTO expectedDto = new ClientDTO("name", getValidDob(), "some@email.com", Collections.emptyList());
-        Client clientFromRepo = new Client(expectedDto.name(), expectedDto.dateOfBirth(), expectedDto.email(), Collections.emptyList());
+        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, "some@email.com", Collections.emptyList());
+        Client clientFromRepo = new Client(expectedDto.name(), expectedDto.email(),expectedDto.phoneNumber(), Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
@@ -68,9 +68,4 @@ class ClientServiceTest {
             assertThat(ex.getMessage()).isEqualTo("Couldn't find Client with id [1]");
         }
     }
-
-    LocalDate getValidDob() {
-        return LocalDate.of(2001, 01, 01);
-    }
-
 }

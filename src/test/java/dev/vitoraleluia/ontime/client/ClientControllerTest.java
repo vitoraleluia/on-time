@@ -52,8 +52,7 @@ class ClientControllerTest {
 
     @Test
     void createUserWithInvalidData() throws Exception {
-        LocalDate dob = LocalDate.of(2001, 01, 02);
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Example name", dob, "not-valid-email");
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Example name", ClientTestConsts.PHONE_NUMBER, "not-valid-email");
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
 
         MockHttpServletRequestBuilder request = post("/client")
@@ -66,10 +65,9 @@ class ClientControllerTest {
 
     @Test
     void createUserIsSuccessfully() throws Exception {
-        LocalDate dob = LocalDate.of(2001, 01, 02);
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("name", dob, "test@test.com");
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("name", "test@test.com",ClientTestConsts.PHONE_NUMBER);
 
-        doNothing().when(service).createClient(clientDTO);
+        when(service.createClient(clientDTO)).thenReturn(new Client(clientDTO));
 
         String jsonBody = this.mapper.writeValueAsString(clientDTO);
         MockHttpServletRequestBuilder request = post("/client")
@@ -77,13 +75,12 @@ class ClientControllerTest {
                 .content(jsonBody);
 
         this.mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
     void getClientWithIdOk() throws Exception {
-        LocalDate dob = LocalDate.of(1999, 06, 26);
-        ClientDTO expectedClient = new ClientDTO("Name", dob, "example@email.com", Collections.emptyList());
+        ClientDTO expectedClient = new ClientDTO("Name", ClientTestConsts.PHONE_NUMBER, "example@email.com", Collections.emptyList());
 
         when(service.getClientWithId(1L)).thenReturn(expectedClient);
 
@@ -96,8 +93,7 @@ class ClientControllerTest {
 
     @Test
     void getClientWithIdNotFound() throws Exception {
-        LocalDate dob = LocalDate.of(1999, 06, 26);
-        ClientDTO expectedClient = new ClientDTO("Name", dob, "example@email.com", Collections.emptyList());
+        ClientDTO expectedClient = new ClientDTO("Name", ClientTestConsts.PHONE_NUMBER, "example@email.com", Collections.emptyList());
 
         when(service.getClientWithId(1L)).thenThrow(new ResourceNotFoundException("Client not found with id"));
 

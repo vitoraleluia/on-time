@@ -7,7 +7,7 @@ import java.util.List;
 
 public record ClientDTO(
         String name,
-        LocalDate dateOfBirth,
+        String phoneNumber,
         String email,
         List<AppointmentDTO> appointments
 ) {
