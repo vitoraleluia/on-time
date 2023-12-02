@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ class ClientServiceTest {
     @Test
     void createClient() {
         //given
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", "some@email.com",ClientTestConsts.PHONE_NUMBER);
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", "some@email.com", ClientTestConsts.PHONE_NUMBER);
 
         Client client = new Client();
         client.setName(clientDTO.name());
@@ -58,7 +57,6 @@ class ClientServiceTest {
     @Test
     void getClientFromIdNotFound() {
         ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, "some@email.com", Collections.emptyList());
-        Client clientFromRepo = new Client(expectedDto.name(), expectedDto.email(),expectedDto.phoneNumber(), Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
