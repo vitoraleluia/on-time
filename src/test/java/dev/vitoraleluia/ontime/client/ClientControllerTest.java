@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.Collections;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,5 +93,27 @@ class ClientControllerTest {
         MockHttpServletRequestBuilder request = get("/client/1").contentType(MediaType.APPLICATION_JSON);
         this.mockMvc.perform(request)
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteClientButAnExceptionIsThrown() throws Exception {
+        MockHttpServletRequestBuilder request = delete("/client/1").contentType(MediaType.APPLICATION_JSON);
+
+        when(service.deleteClient(1L)).thenThrow(new RuntimeException("Random exception"));
+
+        this.mockMvc.perform(request)
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().string("An internal error has occurred see logs for more info"));
+    }
+
+    @Test
+    void deleteClientIsSuccesfull() throws Exception {
+        MockHttpServletRequestBuilder request = delete("/client/1").contentType(MediaType.APPLICATION_JSON);
+
+        when(service.deleteClient(1L)).thenReturn(true);
+
+        this.mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
     }
 }

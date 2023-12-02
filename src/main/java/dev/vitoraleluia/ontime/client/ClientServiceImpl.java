@@ -25,4 +25,10 @@ public class ClientServiceImpl implements ClientService {
                 .map(mapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find Client with id [%s]".formatted(id)));
     }
+
+    @Override
+    public boolean deleteClient(Long id) {
+        repository.deleteById(id);
+        return true;
+    }
 }

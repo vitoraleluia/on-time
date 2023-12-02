@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Basic CRUD controller to manage clients
+ */
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -26,6 +29,12 @@ public class ClientController {
     @ResponseStatus(HttpStatus.OK)
     public ClientDTO getClientWithId(@PathVariable("id") @NonNull @Positive Long id) {
         return service.getClientWithId(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean deleteClient(@PathVariable("id") @NonNull @Positive Long id){
+        return service.deleteClient(id);
     }
 
 }

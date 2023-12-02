@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceTest {
@@ -66,5 +66,26 @@ class ClientServiceTest {
         } catch (ResourceNotFoundException ex) {
             assertThat(ex.getMessage()).isEqualTo("Couldn't find Client with id [1]");
         }
+    }
+
+    @Test
+    void deleteClientThrowsError() {
+        doThrow(new RuntimeException("Ups")).when(repository).deleteById(1L);
+
+        try {
+            service.deleteClient(1L);
+            fail("Should have failed already");
+        } catch (RuntimeException e) {
+            assertThat(e.getMessage()).isEqualTo("Ups");
+        }
+    }
+
+    @Test
+    void deleteClientIsSuccessful() {
+        doNothing().when(repository).deleteById(1L);
+
+        boolean isSuccessful = service.deleteClient(1L);
+
+        assertThat(isSuccessful).isTrue();
     }
 }
