@@ -7,4 +7,6 @@ public interface ClientService {
     ClientDTO getClientWithId(Long id);
 
     boolean deleteClient(Long id);
+
+    ClientDTO updateClient(Long id, ClientRegistrationDTO clientDTO);
 }

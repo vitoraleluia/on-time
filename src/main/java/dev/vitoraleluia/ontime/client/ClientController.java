@@ -33,8 +33,16 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean deleteClient(@PathVariable("id") @NonNull @Positive Long id){
+    public boolean deleteClient(@PathVariable("id") @NonNull @Positive Long id) {
         return service.deleteClient(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDTO updateClientInfo(
+            @PathVariable("id") @NonNull @Positive Long id,
+            @RequestBody ClientRegistrationDTO clientDTO) {
+        return service.updateClient(id, clientDTO);
     }
 
 }

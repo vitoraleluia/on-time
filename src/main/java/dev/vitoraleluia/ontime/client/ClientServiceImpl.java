@@ -15,14 +15,18 @@ public class ClientServiceImpl implements ClientService {
 
 
     public Client createClient(ClientRegistrationDTO clientDTO) {
-        Client client = new Client(clientDTO);
+        var client = new Client(clientDTO);
         return repository.save(client);
     }
 
     @Override
     public ClientDTO getClientWithId(Long id) {
+        Client client = tryToFindClientById(id);
+        return mapper.apply(client);
+    }
+
+    private Client tryToFindClientById(Long id) {
         return repository.findById(id)
-                .map(mapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find Client with id [%s]".formatted(id)));
     }
 
@@ -30,5 +34,18 @@ public class ClientServiceImpl implements ClientService {
     public boolean deleteClient(Long id) {
         repository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public ClientDTO updateClient(Long id, ClientRegistrationDTO clientDTO) {
+        Client client = tryToFindClientById(id);
+        
+        client.setName(clientDTO.name());
+        client.setEmail(clientDTO.email());
+        client.setPhoneNumber(clientDTO.phoneNumber());
+
+        client = repository.save(client);
+
+        return mapper.apply(client);
     }
 }

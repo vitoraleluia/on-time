@@ -10,6 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.Optional;
 
+import static dev.vitoraleluia.ontime.client.ClientTestConsts.NAME;
+import static dev.vitoraleluia.ontime.client.ClientTestConsts.PHONE_NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
@@ -27,11 +29,11 @@ class ClientServiceTest {
     @Test
     void createClient() {
         //given
-        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", "some@email.com", ClientTestConsts.PHONE_NUMBER);
+        ClientRegistrationDTO clientDTO = new ClientRegistrationDTO("Name", "some@email.com", PHONE_NUMBER);
 
         Client client = new Client();
         client.setName(clientDTO.name());
-        client.setPhoneNumber(ClientTestConsts.PHONE_NUMBER);
+        client.setPhoneNumber(PHONE_NUMBER);
         client.setEmail(clientDTO.email());
 
         //when
@@ -43,7 +45,7 @@ class ClientServiceTest {
 
     @Test
     void getClientFromId() {
-        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, EMAIL, Collections.emptyList());
+        ClientDTO expectedDto = new ClientDTO("name", PHONE_NUMBER, EMAIL, Collections.emptyList());
         Client clientFromRepo = new Client(expectedDto.name(), expectedDto.phoneNumber(), expectedDto.email(), Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.of(clientFromRepo));
@@ -56,7 +58,7 @@ class ClientServiceTest {
 
     @Test
     void getClientFromIdNotFound() {
-        ClientDTO expectedDto = new ClientDTO("name", ClientTestConsts.PHONE_NUMBER, "some@email.com", Collections.emptyList());
+        ClientDTO expectedDto = new ClientDTO("name", PHONE_NUMBER, "some@email.com", Collections.emptyList());
 
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
@@ -87,5 +89,26 @@ class ClientServiceTest {
         boolean isSuccessful = service.deleteClient(1L);
 
         assertThat(isSuccessful).isTrue();
+    }
+
+    @Test
+    void updateThrowsErrorNotFound() {
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        try {
+            service.updateClient(1L, new ClientRegistrationDTO(NAME, EMAIL, PHONE_NUMBER));
+            fail("Should have thrown an exception");
+        } catch (ResourceNotFoundException e) {
+            assertThat(e.getMessage()).isEqualTo("Couldn't find Client with id [1]");
+        }
+    }
+
+    @Test
+    void updateIsSuccessful() {
+        Client expectedResponse = new Client(NAME.concat("s"), EMAIL, PHONE_NUMBER, null);
+        when(repository.findById(1L)).thenReturn(Optional.of(expectedResponse));
+
+        ClientDTO clientDTO = service.updateClient(1L, new ClientRegistrationDTO(NAME, EMAIL, PHONE_NUMBER));
+        assertThat(clientDTO).isEqualTo(mapper.apply(expectedResponse));
     }
 }
