@@ -1,9 +1,9 @@
 services:
   database:
-    image: postgres
+    image: "postgres:16.1-alpine"
     ports:
-      - 15432:5432
+      - "15432:5432"
     environment:
-      - POSTGRES_DB=ontime
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      POSTGRES_DB: ontime
+      POSTGRES_USER: ontime
+      POSTGRES_PASSWORD: secret
