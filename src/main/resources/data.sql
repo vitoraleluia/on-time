@@ -1,0 +1,1 @@
+INSERT INTO client (id,name,email,phone_number) VALUES (1,'John Doe','example@email.com','912345678');
