@@ -3,7 +3,6 @@ package dev.vitoraleluia.ontime.client;
 import dev.vitoraleluia.ontime.appointment.Appointment;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +14,7 @@ public class Client {
     private String name;
     private String email;
     private String phoneNumber;
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     private List<Appointment> appointments;
 
     public Client() {
