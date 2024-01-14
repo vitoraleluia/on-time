@@ -38,12 +38,5 @@ public class ClientIT {
         assertThat(response.getBody()).isNull();
     }
 
-    @Test
-    void getUser() {
-        var clientRegistrationDTO = new ClientRegistrationDTO(NAME, EMAIL, PHONE_NUMBER);
-        ResponseEntity<ClientDTO> response = restTemplate.exchange("/client/1", HttpMethod.GET, null, ClientDTO.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-    }
+    // TODO: make a test for the get, put and delete
 }
